@@ -1,0 +1,47 @@
+services:
+###> doctrine/doctrine-bundle ###
+  database:
+    image: mysql:${MYSQL_VERSION:-8.3.0}
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=''
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-password123#}
+    volumes:
+      - ./infra/docker/mysql/conf.d/my.cnf:/etc/my.cnf:ro
+      - ./infra/docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ./infra/docker/mysql/tmp:/tmp:rw
+      - database_data1:/var/lib/mysql:rw
+    networks:
+      - app-network
+
+###< doctrine/doctrine-bundle ###
+
+  app-default:
+    container_name: app-default
+    build:
+      context: ./.
+      dockerfile: ./Dockerfile
+      args:
+        APP_ENV: dev
+
+    volumes:
+      - ./:/app
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "80:8000"
+    env_file:
+      - ./.env
+    networks:
+      - app-network
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data1:
+###< doctrine/doctrine-bundle ###
+
+networks:
+  app-network:
+    driver: bridge
