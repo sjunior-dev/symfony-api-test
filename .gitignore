@@ -88,3 +88,7 @@ yarn-error.log
 .idea/
 **/yarn-cache
 **.php-cs-fixer.cache
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

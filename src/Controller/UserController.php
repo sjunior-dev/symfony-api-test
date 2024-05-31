@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,27 +16,20 @@ class UserController extends AbstractController
     ) {
     }
 
-    #[Route('/user', name: 'user_create', methods: ['POST'])]
-    public function create(Request $request): JsonResponse
+    #[Route('/user', name: 'user_view', methods: ['GET'])]
+    public function view(): Response
     {
-        $user = $this->userService->store($request);
+        $user = $this->getUser();
 
-        return $this->json([
-            'data' => $user,
-        ], Response::HTTP_CREATED);
-    }
-
-    #[Route('/{reference}/user', name: 'user_view', methods: ['GET'])]
-    public function view(User $user): Response
-    {
         return $this->json([
             'data' => $user,
         ]);
     }
 
-    #[Route('/{reference}/user', name: 'user_view', methods: ['PUT'])]
-    public function update(User $user, Request $request): Response
+    #[Route('/user', name: 'user_update', methods: ['PUT'])]
+    public function update(Request $request): Response
     {
+        $user = $this->getUser();
         $user = $this->userService->store($request, $user);
 
         return $this->json([
