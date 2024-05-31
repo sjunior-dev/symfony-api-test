@@ -11,5 +11,11 @@ composer require --dev doctrine/doctrine-fixtures-bundle phpunit/phpunit symfony
 # add doctrine migrations
 composer require doctrine/doctrine-migrations-bundle
 
+# add symfony messenger for async
+composer require symfony/messenger symfony/doctrine-messenger
+
+# add security recipe
+composer require security
+
 ```
 
