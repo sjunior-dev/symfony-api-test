@@ -45,4 +45,14 @@ class UserAdminController extends AbstractController
             'data' => $user,
         ]);
     }
+
+    #[Route('/{reference}/user', name: 'user_delete', methods: ['DELETE'])]
+    public function delete(User $user): Response
+    {
+        $this->userService->remove($user);
+
+        return $this->json([
+            'data' => $user,
+        ]);
+    }
 }

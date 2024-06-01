@@ -18,6 +18,11 @@ class UserService
     ) {
     }
 
+    public function remove(User $user): void
+    {
+        $this->userRepository->remove($user);
+    }
+
     public function store(Request $request, ?User $user = null): User
     {
         $body = json_decode($request->getContent(), true);
