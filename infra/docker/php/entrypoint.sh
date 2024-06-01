@@ -16,6 +16,12 @@ rm -fR var/cache/*; \
 # [OK] The "failed" transport was set up successfully.
 php bin/console messenger:setup-transports
 
+if [ "$APP_ENV" == "dev" ]
+then
+    php bin/console doctrine:fixtures:load --no-interaction
+    php bin/console lexik:jwt:generate-keypair
+fi
+
 # NGINX
 /usr/sbin/nginx -g 'daemon off;' &
 
