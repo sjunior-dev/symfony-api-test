@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Response\UserResponse;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +25,7 @@ class UserAdminController extends AbstractController
         $user = $this->userService->store($request);
 
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ], Response::HTTP_CREATED);
     }
 
@@ -32,7 +33,7 @@ class UserAdminController extends AbstractController
     public function view(User $user): Response
     {
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ]);
     }
 
@@ -42,7 +43,7 @@ class UserAdminController extends AbstractController
         $user = $this->userService->store($request, $user);
 
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ]);
     }
 
@@ -52,7 +53,7 @@ class UserAdminController extends AbstractController
         $this->userService->remove($user);
 
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ]);
     }
 }

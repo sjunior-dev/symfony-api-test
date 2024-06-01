@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Response\UserResponse;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +21,11 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user_view', methods: ['GET'])]
     public function view(): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ]);
     }
 
@@ -33,7 +36,7 @@ class UserController extends AbstractController
         $user = $this->userService->store($request, $user);
 
         return $this->json([
-            'data' => $user,
+            'data' => UserResponse::fromUserEntity($user),
         ]);
     }
 }
