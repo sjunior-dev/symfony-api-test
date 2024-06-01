@@ -128,4 +128,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getReference(): Uuid
+    {
+        return $this->reference;
+    }
+
+    public function setReference(Uuid $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
 }
