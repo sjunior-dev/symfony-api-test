@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Response\UserResponse;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -21,6 +23,18 @@ class UserService
     public function remove(User $user): void
     {
         $this->userRepository->remove($user);
+    }
+
+    public function all(): array
+    {
+        $response = [];
+        $users = $this->userRepository->findAll();
+
+        foreach ($users as $user) {
+            $response[] = UserResponse::fromUserEntity($user);
+        }
+
+        return $response;
     }
 
     public function store(Request $request, ?User $user = null): User

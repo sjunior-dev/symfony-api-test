@@ -12,6 +12,13 @@ content-type: application/json
 
 @authToken = {{login.response.body.token}}
 
+# @name getAllUser
+GET http://localhost/api/admin/v1/users HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+###
+
 # @name getUser
 GET http://localhost/api/admin/v1/e4a9ef8e-da0c-4bb7-b1ca-081df770c277/user HTTP/1.1
 content-type: application/json
