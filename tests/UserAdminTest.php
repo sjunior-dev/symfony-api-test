@@ -44,7 +44,7 @@ class UserAdminTest extends DatabaseAndAPITestCase
 
         $client->request(
             'GET',
-            '/api/admin/v1/' . $user['data']['reference'] . '/user',
+            '/api/admin/v1/' . $user['data']['id'] . '/user',
             [],
             [],
             ['HTTP_Authorization' => 'Bearer ' . $data['token']],
