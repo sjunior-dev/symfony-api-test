@@ -1,0 +1,42 @@
+
+# @name login
+POST http://localhost/api/login_check  HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sjunior.user@gmail.com",
+    "password": "test123"
+}
+
+###
+
+@authToken = {{login.response.body.token}}
+
+
+# @name getUserByUUID
+GET http://localhost/api/admin/v1/aff29638-cef5-4929-a1b2-0372159a5371/user HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+
+###
+
+# @name getUser
+GET http://localhost/api/v1/user HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+###
+
+# @name updateUser
+PUT http://localhost/api/v1/user  HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+{
+    "email": "sjunior.dev1@gmail.com",
+    "password": "test1233",
+    "roles": ["ROLE_USER"]
+}
+
+###

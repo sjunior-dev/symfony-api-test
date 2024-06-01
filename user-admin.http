@@ -1,0 +1,52 @@
+
+# @name login
+POST http://localhost/api/login_check  HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sjunior.admin@gmail.com",
+    "password": "test123"
+}
+
+###
+
+@authToken = {{login.response.body.token}}
+
+# @name getUser
+GET http://localhost/api/admin/v1/e4a9ef8e-da0c-4bb7-b1ca-081df770c277/user HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+###
+
+
+# @name createUser
+POST http://localhost/api/admin/v1/user  HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+{
+    "email": "sjunior.dev231@gmail.com",
+    "password": "test1234",
+    "roles": ["ROLE_ADMIN"]
+}
+
+###
+
+# @name updateUser
+PUT http://localhost/api/admin/v1/a4369a35-ca89-46dc-83f0-d41fedeffbc0/user  HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
+
+{
+    "email": "sjunior.it@gmail.com",
+    "password": "test123",
+    "roles": ["ROLE_USER"]
+}
+
+###
+
+# @name deleteUser
+DELETE http://localhost/api/admin/v1/4d4eeb33-cd27-4cd2-a43c-9e7ba8c270e8/user  HTTP/1.1
+content-type: application/json
+authorization: Bearer {{authToken}}
