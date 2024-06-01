@@ -23,6 +23,9 @@ composer require symfony/uid
 # add JWT Auth
 composer require lexik/jwt-authentication-bundle
 
+# add Nelmio Docs
+composer require nelmio/api-doc-bundle
+
 ```
 
 ---
@@ -68,6 +71,9 @@ Users are created with different roles using fixtures and will be created during
 
 I've decided to differentiate `admin` routes to `user` routes, so access control are simplified.
 
+I've added Nelmio Docs, mapped only one response as an example:
+[http://localhost/api/doc.json](Docs)
+
 ### Unified User Response
 ```json
 {
@@ -98,7 +104,99 @@ docker compose exec app-default <command>
 docker compose exec app-default /bin/sh
 ```
 
-### Rest Client VSCode
+### Connecting to local Database
+**Host:** 127.0.0.1
+
+**Port:** 3306
+
+**Database:** app_core_db
+
+**User:** app_admin
+
+**Pass:** 1cgMx56faAD8v2343Adf433x1ppW
+
+### What can be improved?
+- Normalization of Response Codes
+- Validations
+  - Required
+  - Exists
+  - Types
+- Nelmio Configuration and Mapping (OpenAPI Specs)
+- Global Error Handling
+- Validation Errors and Error Responses
+- Tests
+  - With Roles and all operations
+  - Error Situations
+- Logs
+- Montitoring / Observability
+
+### Running it using `CURL`
+
+#### Login
+
+`POST http://localhost/api/login_check`
+```bash
+curl -X POST http://localhost/api/login_check \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ -d '{"email": "sjunior.admin@gmail.com", "password": "test123"}'
+```
+#### List Users (role admin)
+`GET http://localhost/api/admin/v1/users`
+```bash
+curl -X GET http://localhost/api/admin/v1/users \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ -H "Authorization: Bearer zN0HVjat1Ji02PipFWqjwU49C8F5P9GYOxHtFDsSDofoIjaUkCY6zZ2fIUdY"
+```
+**Response**
+```json
+{
+  "data": [
+    {
+      "id": "27e21e47-9256-4e57-aa4c-aa33f6da7b97",
+      "email": "sjunior.admin@gmail.com",
+      "roles": [
+        "ROLE_ADMIN",
+        "ROLE_USER"
+      ]
+    },
+    {
+      "id": "e975d5ed-dcf8-4fe8-8f52-d8384bc2558a",
+      "email": "sjunior.user@gmail.com",
+      "roles": [
+        "ROLE_USER"
+      ]
+    }
+  ]
+}
+```
+From here is just change the ENDPOINT and METHOD and you can test all
+All Endpoints:
+
+LOGIN `GET http://localhost/api/admin/v1/users`
+
+ADMIN ROUTES:
+
+List all: `GET http://localhost/api/admin/v1/users`
+
+Create `POST http://localhost/api/admin/v1/<id>/user`
+
+Read: `GET http://localhost/api/admin/v1/<id>/user`
+
+Update `PUT http://localhost/api/admin/v1/<id>/user`
+
+Delete `DELETE http://localhost/api/admin/v1/<id>/user`
+
+
+USER ROUTES:
+
+Read: `GET http://localhost/api/v1/user`
+
+Update: `GET http://localhost/api/v1/user`
+
+
+### Running it using Rest Client VSCode
 Add it [here](https://github.com/Huachao/vscode-restclient)
 Configuration files are:
 - user-admin.http
