@@ -147,7 +147,7 @@ curl -X POST http://localhost/api/login_check \
 curl -X GET http://localhost/api/admin/v1/users \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- -H "Authorization: Bearer zN0HVjat1Ji02PipFWqjwU49C8F5P9GYOxHtFDsSDofoIjaUkCY6zZ2fIUdY"
+ -H "Authorization: Bearer <token_from_previous_request>"
 ```
 **Response**
 ```json
