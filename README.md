@@ -174,7 +174,7 @@ curl -X GET http://localhost/api/admin/v1/users \
 From here is just change the ENDPOINT and METHOD and you can test all
 All Endpoints:
 
-LOGIN `GET http://localhost/api/admin/v1/users`
+LOGIN `POST http://localhost/api/login_check`
 
 ADMIN ROUTES:
 
