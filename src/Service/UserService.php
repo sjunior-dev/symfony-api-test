@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Response\UserResponse;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,6 +24,9 @@ class UserService
         $this->userRepository->remove($user);
     }
 
+    /**
+     * @return array<int, UserResponse>
+     */
     public function all(): array
     {
         $response = [];

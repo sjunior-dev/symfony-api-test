@@ -32,6 +32,7 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user_update', methods: ['PUT'])]
     public function update(Request $request): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
         $user = $this->userService->store($request, $user);
 

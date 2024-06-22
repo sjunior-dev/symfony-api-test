@@ -28,6 +28,17 @@ composer require nelmio/api-doc-bundle
 
 ```
 
+### PHPSTAN
+```
+phpstan analyse -l 8 src/
+
+ 12/12 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+
+
+ [OK] No errors
+
+
+```
 ---
 ### Commands and Run
 

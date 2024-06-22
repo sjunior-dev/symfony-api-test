@@ -6,6 +6,10 @@ use App\Entity\User;
 
 class UserResponse
 {
+    /**
+     *
+     * @param array<int, string> $roles
+     */
     public function __construct(
         public string $id,
         public string $email,
