@@ -127,19 +127,21 @@ docker compose exec app-default /bin/sh
 **Pass:** 1cgMx56faAD8v2343Adf433x1ppW
 
 ### What can be improved?
-- Normalization of Response Codes
-- Validations
-  - Required
-  - Exists
-  - Types
-- Nelmio Configuration and Mapping (OpenAPI Specs)
-- Global Error Handling
-- Validation Errors and Error Responses
-- Tests
-  - With Roles and all operations
-  - Error Situations
-- Logs
-- Montitoring / Observability
+- [ ] Filters
+- [ ] Pagination
+- [ ] Easy extensibility (add new endpoints)
+- [ ] Normalization of Response Codes
+- [ ] Normalization of Validations Errors
+  - [ ] Required
+  - [ ] Exists
+  - [ ] Types
+- [ ] Nelmio Configuration and Mapping (OpenAPI Specs)
+- [ ] Global Error Handling
+- [ ] Database optmization - queries
+- [ ] Cache
+- [ ] Tests
+- [ ] Logs
+- [ ] Montitoring / Observability
 
 ### Running it using `CURL`
 
@@ -184,27 +186,18 @@ curl -X GET http://localhost/api/admin/v1/users \
 ```
 From here is just change the ENDPOINT and METHOD and you can test all
 All Endpoints:
+Host: http://localhost
 
-LOGIN `POST http://localhost/api/login_check`
-
-ADMIN ROUTES:
-
-List all: `GET http://localhost/api/admin/v1/users`
-
-Create `POST http://localhost/api/admin/v1/<id>/user`
-
-Read: `GET http://localhost/api/admin/v1/<id>/user`
-
-Update `PUT http://localhost/api/admin/v1/<id>/user`
-
-Delete `DELETE http://localhost/api/admin/v1/<id>/user`
-
-
-USER ROUTES:
-
-Read: `GET http://localhost/api/v1/user`
-
-Update: `GET http://localhost/api/v1/user`
+| Method | Endpoint                 | Description |  Role  |
+| ------ | ------------------------ | ----------- | ------ |
+| POST   | /api/login_check         | Login       | User   |
+| GET    | /api/admin/v1/users      | List Users  | Admin  |
+| POST   | /api/admin/v1/<:id>/user | Create User | Admin  |
+| GET    | /api/admin/v1/<:id>/user | Read User   | Admin  |
+| PUT    | /api/admin/v1/<:id>/user | Update User | Admin  |
+| DELETE | /api/admin/v1/<:id>/user | Delete User | Admin  |
+| GET    | /api/v1/user             | Read User   | User   |
+| POST   | /api/v1/user             | Update User | User   |
 
 
 ### Running it using Rest Client VSCode
