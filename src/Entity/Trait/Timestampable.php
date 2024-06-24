@@ -2,6 +2,7 @@
 
 namespace App\Entity\Trait;
 
+use App\CoreAPI\Entity\Interface\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
@@ -27,7 +28,7 @@ trait Timestampable
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): EntityInterface
     {
         $this->createdAt = $createdAt;
 
@@ -39,7 +40,7 @@ trait Timestampable
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): EntityInterface
     {
         $this->updatedAt = $updatedAt;
 

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\CoreAPI\Service\RequestService;
+use App\DTO\User\UserResponseDTO;
 use App\Entity\User;
-use App\Response\UserResponse;
-use App\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,59 +17,60 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserAdminController extends AbstractController
 {
     public function __construct(
-        public readonly UserService $userService
+        public readonly RequestService $requestService
     ) {
     }
 
     #[Route('/users', name: 'user_list', methods: ['GET'])]
-    public function list(): Response
+    public function list(): JsonResponse
     {
+        $users = $this->requestService->all(User::class);
 
         return $this->json([
-            'data' => $this->userService->all(),
+            'data' => array_map(fn (User $user) => UserResponseDTO::fromProperties($user), $users),
         ]);
     }
 
     #[Route('/user', name: 'user_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $user = $this->userService->store($request);
+        $user = $this->requestService->store($request);
 
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
+            'data' => UserResponseDTO::fromProperties($user),
         ], Response::HTTP_CREATED);
     }
 
     #[OA\Response(
         response: 200,
         description: 'Successful response',
-        content: new Model(type: UserResponse::class)
+        content: new Model(type: UserResponseDTO::class)
     )]
     #[Route('/{reference}/user', name: 'user_view', methods: ['GET'])]
-    public function view(User $user): Response
+    public function view(User $user): JsonResponse
     {
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
-        ]);
+            'data' => UserResponseDTO::fromProperties($user),
+        ], Response::HTTP_OK);
     }
 
     #[Route('/{reference}/user', name: 'user_update', methods: ['PUT'])]
-    public function update(User $user, Request $request): Response
+    public function update(User $user, Request $request): JsonResponse
     {
-        $user = $this->userService->store($request, $user);
+        $user = $this->requestService->store($request, $user);
 
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
-        ]);
+            'data' => UserResponseDTO::fromProperties($user),
+        ], Response::HTTP_OK);
     }
 
     #[Route('/{reference}/user', name: 'user_delete', methods: ['DELETE'])]
-    public function delete(User $user): Response
+    public function delete(User $user): JsonResponse
     {
-        $this->userService->remove($user);
+        $this->requestService->remove($user);
 
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
-        ]);
+            'data' => UserResponseDTO::fromProperties($user),
+        ], Response::HTTP_OK);
     }
 }
