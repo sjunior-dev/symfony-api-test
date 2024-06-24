@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\CoreAPI\Service\RequestService;
+use App\DTO\User\UserResponseDTO;
 use App\Entity\User;
-use App\Response\UserResponse;
-use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserController extends AbstractController
 {
     public function __construct(
-        public readonly UserService $userService
+        public readonly RequestService $requestService
     ) {
     }
 
@@ -25,7 +25,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
+            'data' => UserResponseDTO::fromUserEntity($user),
         ]);
     }
 
@@ -34,10 +34,10 @@ class UserController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $user = $this->userService->store($request, $user);
+        $user = $this->requestService->store($request, $user);
 
         return $this->json([
-            'data' => UserResponse::fromUserEntity($user),
+            'data' => UserResponseDTO::fromUserEntity($user),
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\CoreAPI\Entity\Interface\EntityInterface;
 use App\Entity\Trait\SoftDeletable;
 use App\Entity\Trait\Timestampable;
 use App\Repository\UserRepository;
@@ -18,34 +19,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_REFERENCE', fields: ['reference'])]
 #[UniqueEntity('email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements EntityInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampable;
     use SoftDeletable;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private int $id;
 
-    #[ORM\Column(type: 'uuid')]
+    #[ORM\Column(name: 'reference', type: 'uuid', nullable: false)]
     private Uuid $reference;
 
-    #[Assert\NotBlank]
+    // #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
     private string $email;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
+    /** @var array<string> $roles */
+    #[ORM\Column(name: 'roles', type: 'json', nullable: false)]
     private array $roles = ['ROLE_USER'];
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
+    #[ORM\Column(name: 'password', type: 'string', length: 255, nullable: false)]
     private string $password;
 
     public function __construct()
@@ -54,9 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reference = Uuid::v4();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -64,28 +67,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
+    /** @return list<string> */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -95,10 +89,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
+    /** @param list<string> $roles */
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -113,7 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 

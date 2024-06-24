@@ -31,13 +31,13 @@ composer require nelmio/api-doc-bundle
 ### PHPSTAN
 ```
 phpstan analyse -l 8 src/
+Note: Using configuration file /project/phpstan.dist.neon.
+ 21/21 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
- 12/12 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
 
  [OK] No errors
-
-
+                                                                                                                        
 ```
 ---
 ### Commands and Run

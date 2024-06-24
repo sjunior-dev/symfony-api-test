@@ -2,6 +2,9 @@
 
 namespace App\Repository;
 
+use App\CoreAPI\Repository\Interface\RepositoryInterface;
+use App\CoreAPI\Repository\Trait\RemovableTrait;
+use App\CoreAPI\Repository\Trait\SavableTrait;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,16 +15,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 /**
  * @extends ServiceEntityRepository<User>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository implements RepositoryInterface, PasswordUpgraderInterface
 {
+    use SavableTrait;
+    use RemovableTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
@@ -31,23 +34,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
-    }
-
-    public function save(User $entity, bool $flush = true): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(User $entity, bool $flush = true): void
-    {
-        $entity->setRemovedAt(new \DateTimeImmutable());
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 }
