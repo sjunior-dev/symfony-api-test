@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Response;
+namespace App\DTO\User;
 
+use App\CoreAPI\Entity\Interface\EntityInterface;
 use App\Entity\User;
 
-class UserResponse
+class UserResponseDTO
 {
     /**
      *
@@ -17,8 +18,10 @@ class UserResponse
     ) {
     }
 
-    public static function fromUserEntity(User $user): self
+    /** @param EntityInterface $user */
+    public static function fromUserEntity(EntityInterface $user): self
     {
+        /** @var User $user */
         return new self(
             $user->getReference()->toRfc4122(),
             $user->getEmail(),

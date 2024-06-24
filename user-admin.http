@@ -20,7 +20,7 @@ authorization: Bearer {{authToken}}
 ###
 
 # @name getUser
-GET http://localhost/api/admin/v1/e4a9ef8e-da0c-4bb7-b1ca-081df770c277/user HTTP/1.1
+GET http://localhost/api/admin/v1/27e21e47-9256-4e57-aa4c-aa33f6da7b97/user HTTP/1.1
 content-type: application/json
 authorization: Bearer {{authToken}}
 
@@ -41,7 +41,7 @@ authorization: Bearer {{authToken}}
 ###
 
 # @name updateUser
-PUT http://localhost/api/admin/v1/a4369a35-ca89-46dc-83f0-d41fedeffbc0/user  HTTP/1.1
+PUT http://localhost/api/admin/v1/27e21e47-9256-4e57-aa4c-aa33f6da7b97/user  HTTP/1.1
 content-type: application/json
 authorization: Bearer {{authToken}}
 

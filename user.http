@@ -34,7 +34,7 @@ content-type: application/json
 authorization: Bearer {{authToken}}
 
 {
-    "email": "sjunior.dev1@gmail.com",
+    "email": "sjunior.dev3@gmail.com",
     "password": "test1233",
     "roles": ["ROLE_USER"]
 }

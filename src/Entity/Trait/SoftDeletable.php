@@ -2,6 +2,7 @@
 
 namespace App\Entity\Trait;
 
+use App\CoreAPI\Entity\Interface\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 trait SoftDeletable
@@ -31,7 +32,7 @@ trait SoftDeletable
         return $this->removedAt;
     }
 
-    public function setRemovedAt(\DateTimeImmutable $removedAt): self
+    public function setRemovedAt(\DateTimeImmutable $removedAt): EntityInterface
     {
         $this->removedAt = $removedAt;
 
