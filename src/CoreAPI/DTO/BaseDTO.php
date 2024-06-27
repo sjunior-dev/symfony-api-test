@@ -10,35 +10,6 @@ use function Symfony\Component\String\u;
 abstract class BaseDTO implements ResourceDTOInterface
 {
     protected array $transformers = [];
-    // private array $filters = [
-    //     'name' => [
-    //         'field' => 'name',
-    //         'options' => [],
-    //     ],
-    //     'status' => [
-    //         'field' => 'plannedEndDate',
-    //         'options' => [
-    //             'ongoing',
-    //             'completed',
-    //         ],
-    //         'transformers' => [
-    //             'ongoing' => [
-    //                 'value' => (new \DateTime())->format('Y-m-d'),
-    //                 'operator' => '>',
-    //             ],
-    //             'completed' => [
-    //                 'value' => (new \DateTime())->format('Y-m-d'),
-    //                 'operator' => '<=',
-    //             ],
-    //         ],
-    //     ],
-    // ];
-
-    // public function __construct(
-    //     private EntityBuilderHelper $entityBuilderHelper,
-    // ) {
-    // }
-
 
     public static function fromProperties(EntityInterface $entity): self
     {
